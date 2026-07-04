@@ -1,8 +1,8 @@
-# ✈️ AI Travels — AI-Powered Trip Planner
+# ✈️ Travel Planner — Itinerari di Viaggio Istantanei
 
-> Generate complete, personalized travel itineraries in seconds using AI, with built-in affiliate monetization.
+> Genera itinerari di viaggio completi e personalizzati in pochi secondi, con monetizzazione affiliate incorporata.
 
-AI Travels is a full-stack SaaS application that leverages **Google Gemini** to create detailed day-by-day travel plans. Users enter a destination, dates, budget, and number of travelers — and the platform returns a rich itinerary complete with activities, cost estimates, and affiliate links for hotels, tours, and flights.
+Travel Planner è un'app full-stack che consente di creare piani di viaggio dettagliati. Gli utenti inseriscono una destinazione, le date, il budget e il numero di viaggiatori — e la piattaforma restituisce un itinerario ricco di attività, costi stimati e link affiliati per hotel, tour e voli.
 
 ---
 
@@ -12,7 +12,7 @@ AI Travels is a full-stack SaaS application that leverages **Google Gemini** to 
 | ------------ | -------------------------------- |
 | **Frontend** | Next.js 14 · React · TypeScript  |
 | **Backend**  | .NET 8 · C# · ASP.NET Core      |
-| **AI Engine**| Python 3.12 · FastAPI · Gemini   |
+| **Engine** | Python 3.12 · FastAPI · Gemini   |
 | **Database** | PostgreSQL 16 · JSONB            |
 | **Infra**    | Docker Compose · Dev Containers  |
 
@@ -41,7 +41,8 @@ cd AI-TRAVELS
 
 # 2. Create your local env file
 cp .env.example .env
-# Edit .env and set your GEMINI_API_KEY
+# Edit .env and set your GEMINI_API_KEY if you want real Gemini generation
+# To use demo itinerary data without Gemini, set USE_DEMO_DATA=true
 
 # 3. Open in VS Code → Reopen in Container
 code .

@@ -2,6 +2,7 @@ using System.Text.Json;
 using AiTravels.Api.Models;
 using AiTravels.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace AiTravels.Api.Controllers;
 
@@ -17,17 +18,20 @@ public class ItineraryController : ControllerBase
     private readonly CacheService _cacheService;
     private readonly ILogger<ItineraryController> _logger;
     private readonly JsonSerializerOptions _jsonOptions;
+    private readonly bool _useDemoData;
 
     public ItineraryController(
         IAiEngineService aiEngineService,
         AffiliateService affiliateService,
         CacheService cacheService,
-        ILogger<ItineraryController> logger)
+        ILogger<ItineraryController> logger,
+        IConfiguration configuration)
     {
         _aiEngineService = aiEngineService;
         _affiliateService = affiliateService;
         _cacheService = cacheService;
         _logger = logger;
+        _useDemoData = string.Equals(configuration["USE_DEMO_DATA"], "true", StringComparison.OrdinalIgnoreCase);
         _jsonOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
@@ -63,6 +67,19 @@ public class ItineraryController : ControllerBase
         if (totalDays > 30)
         {
             return BadRequest(new { error = "Trip duration cannot exceed 30 days." });
+        }
+
+        // Step 1: If demo mode is enabled, return sample data from the database instead of calling Gemini.
+        if (_useDemoData)
+        {
+            var demoTrip = await _cacheService.GetDemoTripAsync(request.Destination, cancellationToken);
+            if (demoTrip is null)
+            {
+                return NotFound(new { error = "Nessun itinerario demo disponibile nel database." });
+            }
+
+            _logger.LogInformation("Returning demo itinerary from database for destination: {Destination}", request.Destination);
+            return Ok(BuildEnrichedResponse(demoTrip));
         }
 
         // Step 1: Check cache
@@ -170,8 +187,17 @@ public class ItineraryController : ControllerBase
         var itinerary = JsonSerializer.Deserialize<ItineraryResponse>(trip.ItineraryData, _jsonOptions)
             ?? throw new InvalidOperationException($"Failed to deserialize itinerary data for trip {trip.Id}.");
 
-        var affiliateLinks = JsonSerializer.Deserialize<Dictionary<string, string>>(trip.AffiliateData, _jsonOptions)
-            ?? new Dictionary<string, string>();
+        Dictionary<string, string> affiliateLinks;
+        try
+        {
+            affiliateLinks = JsonSerializer.Deserialize<Dictionary<string, string>>(trip.AffiliateData, _jsonOptions)
+                ?? new Dictionary<string, string>();
+        }
+        catch (JsonException)
+        {
+            _logger.LogWarning("Affiliate data could not be parsed as flat string dictionary for trip {TripId}. Returning empty affiliate links.", trip.Id);
+            affiliateLinks = new Dictionary<string, string>();
+        }
 
         return new EnrichedItineraryResponse(
             Destination: itinerary.Destination,

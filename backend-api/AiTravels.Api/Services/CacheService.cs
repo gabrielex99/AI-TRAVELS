@@ -77,6 +77,58 @@ public class CacheService
     }
 
     /// <summary>
+    /// Retrieves a demo trip from the database by destination or fallback to the first public trip.
+    /// </summary>
+    public async Task<TripEntity?> GetDemoTripAsync(string destination, CancellationToken cancellationToken = default)
+    {
+        if (!string.IsNullOrWhiteSpace(destination))
+        {
+            var normalizedDestination = destination.Trim();
+            var trip = await _dbContext.Trips
+                .AsNoTracking()
+                .Where(t => t.IsPublic && EF.Functions.ILike(t.Destination, $"%{normalizedDestination}%"))
+                .OrderByDescending(t => t.CreatedAt)
+                .FirstOrDefaultAsync(cancellationToken);
+
+            if (trip is not null)
+            {
+                return trip;
+            }
+
+            // Fallback for common alias or punctuation variations such as Roma,Italy -> Rome, Italy
+            var fallbackTerms = new List<string>();
+            var lowerDestination = normalizedDestination.ToLowerInvariant();
+            if (lowerDestination.Contains("roma"))
+            {
+                fallbackTerms.Add("Rome");
+            }
+            if (lowerDestination.Contains("italy"))
+            {
+                fallbackTerms.Add("Italy");
+            }
+            if (fallbackTerms.Count > 0)
+            {
+                trip = await _dbContext.Trips
+                    .AsNoTracking()
+                    .Where(t => t.IsPublic && fallbackTerms.Any(term => EF.Functions.ILike(t.Destination, $"%{term}%")))
+                    .OrderByDescending(t => t.CreatedAt)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                if (trip is not null)
+                {
+                    return trip;
+                }
+            }
+        }
+
+        return await _dbContext.Trips
+            .AsNoTracking()
+            .Where(t => t.IsPublic)
+            .OrderByDescending(t => t.CreatedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+    }
+
+    /// <summary>
     /// Retrieves a trip by its URL slug and increments the view count.
     /// </summary>
     public async Task<TripEntity?> GetTripBySlugAsync(string slug, CancellationToken cancellationToken = default)

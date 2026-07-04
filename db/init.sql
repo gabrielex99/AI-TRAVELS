@@ -82,79 +82,143 @@ INSERT INTO trips (
     '2026-09-01',
     '2026-09-05',
     '{
-        "days": [
+        "destination": "Rome, Italy",
+        "total_days": 5,
+        "flight_widget_params": {
+            "destination_iata": "FCO",
+            "suggested_months": ["2026-09"]
+        },
+        "itinerary": [
             {
                 "day": 1,
-                "title": "Arrival & Ancient Rome",
-                "activities": [
-                    {"time": "10:00", "name": "Colosseum & Roman Forum", "duration_hours": 3, "cost_estimate": 18.00, "category": "sightseeing"},
-                    {"time": "14:00", "name": "Lunch in Monti", "duration_hours": 1.5, "cost_estimate": 25.00, "category": "food"},
-                    {"time": "16:00", "name": "Palatine Hill", "duration_hours": 2, "cost_estimate": 0, "category": "sightseeing"},
-                    {"time": "20:00", "name": "Dinner in Trastevere", "duration_hours": 2, "cost_estimate": 40.00, "category": "food"}
-                ]
+                "theme": "Arrivo e Roma Antica",
+                "slots": {
+                    "morning": {
+                        "option_a": {
+                            "title": "Colosseo & Foro Romano",
+                            "description": "Visita guidata tra i monumenti dell'antica Roma.",
+                            "latitude": 41.8902,
+                            "longitude": 12.4922,
+                            "gyg_search_term": "Colosseum guided tour Rome"
+                        },
+                        "option_b": {
+                            "title": "Passeggiata al Circo Massimo",
+                            "description": "Cammina tra le rovine dell'antico stadio romano.",
+                            "latitude": 41.8860,
+                            "longitude": 12.4854,
+                            "gyg_search_term": "Circus Maximus Rome walking tour"
+                        }
+                    },
+                    "afternoon": {
+                        "option_a": {
+                            "title": "Pranzo a Monti",
+                            "description": "Prova la cucina romana in un locale tradizionale.",
+                            "latitude": 41.8955,
+                            "longitude": 12.4868,
+                            "gyg_search_term": "Monti Rome food tour"
+                        },
+                        "option_b": {
+                            "title": "Visita al Palatino",
+                            "description": "Scopri i palazzi imperiali e la vista sulla città.",
+                            "latitude": 41.8894,
+                            "longitude": 12.4881,
+                            "gyg_search_term": "Palatine Hill Rome tickets"
+                        }
+                    },
+                    "evening": {
+                        "option_a": {
+                            "title": "Cena a Trastevere",
+                            "description": "Cena in un quartiere pittoresco con atmosfera romana.",
+                            "latitude": 41.8899,
+                            "longitude": 12.4723,
+                            "gyg_search_term": "Trastevere dinner experience"
+                        },
+                        "option_b": {
+                            "title": "Aperitivo in piazza Navona",
+                            "description": "Goditi un aperitivo tra le statue barocche.",
+                            "latitude": 41.8986,
+                            "longitude": 12.4731,
+                            "gyg_search_term": "Piazza Navona aperitivo"
+                        }
+                    }
+                }
             },
             {
                 "day": 2,
-                "title": "Vatican & Culture",
-                "activities": [
-                    {"time": "08:30", "name": "Vatican Museums & Sistine Chapel", "duration_hours": 4, "cost_estimate": 17.00, "category": "sightseeing"},
-                    {"time": "13:00", "name": "Lunch near Vatican", "duration_hours": 1, "cost_estimate": 20.00, "category": "food"},
-                    {"time": "15:00", "name": "St. Peter''s Basilica", "duration_hours": 2, "cost_estimate": 0, "category": "sightseeing"},
-                    {"time": "18:00", "name": "Castel Sant''Angelo", "duration_hours": 1.5, "cost_estimate": 15.00, "category": "sightseeing"}
-                ]
-            },
-            {
-                "day": 3,
-                "title": "Baroque Rome & Piazzas",
-                "activities": [
-                    {"time": "09:00", "name": "Trevi Fountain & Spanish Steps", "duration_hours": 2, "cost_estimate": 0, "category": "sightseeing"},
-                    {"time": "11:30", "name": "Pantheon", "duration_hours": 1, "cost_estimate": 5.00, "category": "sightseeing"},
-                    {"time": "13:00", "name": "Lunch at Piazza Navona", "duration_hours": 1.5, "cost_estimate": 30.00, "category": "food"},
-                    {"time": "15:30", "name": "Galleria Borghese", "duration_hours": 2, "cost_estimate": 15.00, "category": "sightseeing"}
-                ]
-            },
-            {
-                "day": 4,
-                "title": "Day Trip – Tivoli",
-                "activities": [
-                    {"time": "09:00", "name": "Villa d''Este", "duration_hours": 3, "cost_estimate": 13.00, "category": "sightseeing"},
-                    {"time": "13:00", "name": "Lunch in Tivoli", "duration_hours": 1, "cost_estimate": 20.00, "category": "food"},
-                    {"time": "14:30", "name": "Hadrian''s Villa", "duration_hours": 3, "cost_estimate": 10.00, "category": "sightseeing"},
-                    {"time": "19:00", "name": "Dinner back in Rome", "duration_hours": 2, "cost_estimate": 45.00, "category": "food"}
-                ]
-            },
-            {
-                "day": 5,
-                "title": "Hidden Gems & Departure",
-                "activities": [
-                    {"time": "09:00", "name": "Aventine Hill & Orange Garden", "duration_hours": 1.5, "cost_estimate": 0, "category": "sightseeing"},
-                    {"time": "11:00", "name": "Testaccio Market", "duration_hours": 1.5, "cost_estimate": 15.00, "category": "food"},
-                    {"time": "13:00", "name": "Final Gelato Tour", "duration_hours": 1, "cost_estimate": 10.00, "category": "food"},
-                    {"time": "15:00", "name": "Transfer to Airport", "duration_hours": 1, "cost_estimate": 50.00, "category": "transport"}
-                ]
+                "theme": "Vaticano e Arte Sacra",
+                "slots": {
+                    "morning": {
+                        "option_a": {
+                            "title": "Musei Vaticani & Cappella Sistina",
+                            "description": "Ammira i capolavori rinascimentali.",
+                            "latitude": 41.9065,
+                            "longitude": 12.4536,
+                            "gyg_search_term": "Vatican Museums guided tour"
+                        },
+                        "option_b": {
+                            "title": "Basilica di San Pietro",
+                            "description": "Visita la basilica e sali sulla cupola.",
+                            "latitude": 41.9022,
+                            "longitude": 12.4539,
+                            "gyg_search_term": "St Peter's Basilica dome tour"
+                        }
+                    },
+                    "afternoon": {
+                        "option_a": {
+                            "title": "Pranzo vicino al Vaticano",
+                            "description": "Pranzo tipico in un locale elegante.",
+                            "latitude": 41.9051,
+                            "longitude": 12.4553,
+                            "gyg_search_term": "Vatican area lunch"
+                        },
+                        "option_b": {
+                            "title": "Passeggiata a Piazza del Popolo",
+                            "description": "Passeggia tra piazze storiche e negozi.",
+                            "latitude": 41.9101,
+                            "longitude": 12.4769,
+                            "gyg_search_term": "Rome Piazza del Popolo walking tour"
+                        }
+                    },
+                    "evening": {
+                        "option_a": {
+                            "title": "Tramonto al Gianicolo",
+                            "description": "Ammira la città dal colle panoramico.",
+                            "latitude": 41.8896,
+                            "longitude": 12.4665,
+                            "gyg_search_term": "Gianicolo sunset tour Rome"
+                        },
+                        "option_b": {
+                            "title": "Cena a Prati",
+                            "description": "Cena in uno dei quartieri più eleganti di Roma.",
+                            "latitude": 41.9104,
+                            "longitude": 12.4616,
+                            "gyg_search_term": "Prati Rome dinner"
+                        }
+                    }
+                }
             }
-        ],
-        "summary": {
-            "total_estimated_cost": 348.00,
-            "currency": "EUR",
-            "highlights": ["Colosseum", "Vatican Museums", "Tivoli Day Trip", "Trastevere Dining"]
-        }
+        ]
     }'::jsonb,
     '{
-        "hotels": [
-            {"provider": "booking", "url": "https://www.booking.com/searchresults.html?ss=Rome&aid=", "label": "Find Hotels in Rome"}
-        ],
-        "activities": [
-            {"provider": "getyourguide", "url": "https://www.getyourguide.com/rome-l711/", "label": "Book Tours in Rome"}
-        ],
-        "flights": [
-            {"provider": "aviasales", "url": "https://www.aviasales.com/", "label": "Find Flights to Rome"}
-        ]
+        "hotel_search": "https://www.booking.com/searchresults.html?ss=Rome&aid=",
+        "activities_search": "https://www.getyourguide.com/rome-l711/",
+        "flight_search": "https://www.aviasales.com/"
     }'::jsonb,
     'sha256_rome_5d_1500_2p_20260901',
     TRUE,
     'rome-italy-5-days-2-people'
-) ON CONFLICT (search_hash) DO NOTHING;
+) ON CONFLICT (search_hash) DO UPDATE SET
+    destination = EXCLUDED.destination,
+    total_days = EXCLUDED.total_days,
+    budget_max = EXCLUDED.budget_max,
+    num_people = EXCLUDED.num_people,
+    start_date = EXCLUDED.start_date,
+    end_date = EXCLUDED.end_date,
+    itinerary_data = EXCLUDED.itinerary_data,
+    affiliate_data = EXCLUDED.affiliate_data,
+    is_public = EXCLUDED.is_public,
+    slug = EXCLUDED.slug,
+    updated_at = NOW();
 
 -- ============================================================
 -- Done
