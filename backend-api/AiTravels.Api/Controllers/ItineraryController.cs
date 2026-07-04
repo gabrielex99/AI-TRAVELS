@@ -111,13 +111,8 @@ public class ItineraryController : ControllerBase
         var enrichedResponse = new EnrichedItineraryResponse(
             Destination: itinerary.Destination,
             TotalDays: itinerary.TotalDays,
-            NumPeople: itinerary.NumPeople,
-            BudgetMax: itinerary.BudgetMax,
-            TotalEstimatedCost: itinerary.TotalEstimatedCost,
-            Currency: itinerary.Currency,
-            Days: itinerary.Days,
-            FlightWidget: itinerary.FlightWidget,
-            Tips: itinerary.Tips,
+            FlightWidgetParams: itinerary.FlightWidgetParams,
+            Itinerary: itinerary.Itinerary,
             AffiliateLinks: affiliateLinks,
             TripId: savedTrip.Id,
             Slug: savedTrip.Slug
@@ -181,13 +176,8 @@ public class ItineraryController : ControllerBase
         return new EnrichedItineraryResponse(
             Destination: itinerary.Destination,
             TotalDays: itinerary.TotalDays,
-            NumPeople: itinerary.NumPeople,
-            BudgetMax: itinerary.BudgetMax,
-            TotalEstimatedCost: itinerary.TotalEstimatedCost,
-            Currency: itinerary.Currency,
-            Days: itinerary.Days,
-            FlightWidget: itinerary.FlightWidget,
-            Tips: itinerary.Tips,
+            FlightWidgetParams: itinerary.FlightWidgetParams,
+            Itinerary: itinerary.Itinerary,
             AffiliateLinks: affiliateLinks,
             TripId: trip.Id,
             Slug: trip.Slug

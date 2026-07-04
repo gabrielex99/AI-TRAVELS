@@ -22,48 +22,60 @@ public class AffiliateService
     /// Generates affiliate links for all activities that have a GYG search term.
     /// </summary>
     /// <param name="itinerary">The itinerary to extract search terms from.</param>
-    /// <returns>Dictionary mapping activity name to affiliate URL.</returns>
+    /// <returns>Dictionary mapping GYG search term to affiliate URL.</returns>
     public Dictionary<string, string> GenerateAffiliateLinks(ItineraryResponse itinerary)
     {
         var affiliateLinks = new Dictionary<string, string>();
 
-        if (itinerary.Days is null)
+        if (itinerary.Itinerary is null)
         {
             return affiliateLinks;
         }
 
-        foreach (var day in itinerary.Days)
+        void AddLink(ActivityOption option)
         {
-            if (day.DaySlots?.Slots is null)
+            if (option == null || string.IsNullOrWhiteSpace(option.GygSearchTerm))
+            {
+                return;
+            }
+
+            if (affiliateLinks.ContainsKey(option.GygSearchTerm))
+            {
+                return;
+            }
+
+            var encodedSearch = Uri.EscapeDataString(option.GygSearchTerm);
+            var affiliateUrl = $"{_gygBaseUrl}/s/?q={encodedSearch}&partner_id={_gygPartnerId}&utm_medium=online_publisher";
+            
+            affiliateLinks[option.GygSearchTerm] = affiliateUrl;
+        }
+
+        foreach (var day in itinerary.Itinerary)
+        {
+            if (day.Slots == null)
             {
                 continue;
             }
 
-            foreach (var slot in day.DaySlots.Slots)
+            // Morning slots
+            if (day.Slots.Morning != null)
             {
-                if (slot.Options is null)
-                {
-                    continue;
-                }
+                AddLink(day.Slots.Morning.OptionA);
+                AddLink(day.Slots.Morning.OptionB);
+            }
 
-                foreach (var activity in slot.Options)
-                {
-                    if (string.IsNullOrWhiteSpace(activity.GygSearchTerm))
-                    {
-                        continue;
-                    }
+            // Afternoon slots
+            if (day.Slots.Afternoon != null)
+            {
+                AddLink(day.Slots.Afternoon.OptionA);
+                AddLink(day.Slots.Afternoon.OptionB);
+            }
 
-                    if (affiliateLinks.ContainsKey(activity.Name))
-                    {
-                        continue;
-                    }
-
-                    var encodedSearch = Uri.EscapeDataString(activity.GygSearchTerm);
-                    var affiliateUrl =
-                        $"{_gygBaseUrl}/s/?q={encodedSearch}&partner_id={_gygPartnerId}&utm_medium=online_publisher";
-
-                    affiliateLinks[activity.Name] = affiliateUrl;
-                }
+            // Evening slots
+            if (day.Slots.Evening != null)
+            {
+                AddLink(day.Slots.Evening.OptionA);
+                AddLink(day.Slots.Evening.OptionB);
             }
         }
 
