@@ -1,0 +1,45 @@
+{
+  "name": "AI Travels - Full Stack Dev",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "backend-api",
+  "workspaceFolder": "/workspace",
+  "forwardPorts": [3000, 5000, 5001, 8000, 5433],
+  "portsAttributes": {
+    "3000": { "label": "Frontend (Next.js)", "onAutoForward": "notify" },
+    "5000": { "label": "Backend API (.NET)", "onAutoForward": "notify" },
+    "5001": { "label": "Backend API HTTPS (.NET)", "onAutoForward": "notify" },
+    "8000": { "label": "AI Engine (FastAPI)", "onAutoForward": "notify" },
+    "5433": { "label": "PostgreSQL", "onAutoForward": "silent" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.csdevkit",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-docker",
+        "ckolkman.vscode-postgres",
+        "eamodio.gitlens",
+        "usernamehw.errorlens",
+        "rangav.vscode-thunder-client"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[csharp]": {
+          "editor.defaultFormatter": "ms-dotnettools.csharp"
+        },
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.python"
+        },
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "typescript.tsdk": "node_modules/typescript/lib"
+      }
+    }
+  },
+  "postCreateCommand": "echo '✅ AI Travels Dev Container ready!'",
+  "remoteUser": "vscode"
+}
